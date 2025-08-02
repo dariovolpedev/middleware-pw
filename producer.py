@@ -1,5 +1,6 @@
 import asyncio
 from middleware import Middleware
+from logger import setup_logger
 
 async def produce(middleware: Middleware):
     eventi = [
@@ -10,5 +11,6 @@ async def produce(middleware: Middleware):
 
     for evento in eventi:
         await middleware.receive_message(evento["queue"], evento["message"])
-        print(f"[PRODUCER] Messaggio inviato a '{evento['queue']}': {evento['message']}")
+        logger.info(f"Messaggio inviato a '{evento['queue']}': {evento['message']}")
         await asyncio.sleep(1)
+
