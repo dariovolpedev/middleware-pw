@@ -1,6 +1,0 @@
-2025-06-13 13:41:12,007 - middleware - INFO - Messaggio ricevuto e cifrato: Produzione completata: lotto A
-2025-06-13 13:41:12,008 - middleware - INFO - Messaggio decifrato e distribuito: Produzione completata: lotto A
-2025-06-13 13:41:13,022 - middleware - INFO - Messaggio ricevuto e cifrato: Movimentazione in magazzino
-2025-06-13 13:41:13,519 - middleware - INFO - Messaggio decifrato e distribuito: Movimentazione in magazzino
-2025-06-13 13:41:14,023 - middleware - INFO - Messaggio ricevuto e cifrato: Richiesta spedizione logistica
-2025-06-13 13:41:15,023 - middleware - INFO - Messaggio decifrato e distribuito: Richiesta spedizione logistica
