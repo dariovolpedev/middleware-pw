@@ -1,7 +1,9 @@
 import asyncio
 from middleware import Middleware
 from config import QUEUE_NAMES
-from logger import setup_logger
+from log_utils import setup_logger
+
+logger = setup_logger("consumer")
 
 async def consume(middleware: Middleware):
     while True:
