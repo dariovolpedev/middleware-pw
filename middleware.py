@@ -1,7 +1,7 @@
 import asyncio
 from asyncio import Queue
 from encryption import encrypt_message, decrypt_message
-from logger import setup_logger
+from log_utils import setup_logger
 from config import MAX_RETRIES, TIMEOUT_SECONDS
 
 logger = setup_logger("middleware")
@@ -23,13 +23,18 @@ class Middleware:
 
     async def dispatch_message(self, queue_name: str):
         queue = self._get_queue(queue_name)
-        for attempt in range(MAX_RETRIES):
-            try:
-                encrypted = await asyncio.wait_for(queue.get(), timeout=TIMEOUT_SECONDS)
-                message = decrypt_message(encrypted)
-                logger.info(f"Messaggio distribuito da '{queue_name}': {message}")
-                return message
-            except asyncio.TimeoutError:
-                logger.warning(f"Timeout su coda '{queue_name}' (tentativo {attempt+1})")
-        logger.error(f"Ritento superato su coda '{queue_name}'")
-        return None
+
+        if queue.empty():
+            # nessun messaggio → condizione normale, nessun log
+            return None
+
+        # qui so che c'è almeno un messaggio, quindi posso attendere con timeout
+        try:
+            encrypted = await asyncio.wait_for(queue.get(), timeout=TIMEOUT_SECONDS)
+            message = decrypt_message(encrypted)
+            logger.info(f"Messaggio distribuito da '{queue_name}': {message}")
+            return message
+        except asyncio.TimeoutError:
+            logger.warning(f"Timeout su coda '{queue_name}' (nessun messaggio consumato entro {TIMEOUT_SECONDS}s)")
+            return None
+

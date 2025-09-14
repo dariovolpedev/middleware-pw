@@ -10,7 +10,7 @@ QUEUE_NAME = "event_queue"
 MAX_RETRIES = 3
 
 # Timeout in secondi per dispatch_message
-DISPATCH_TIMEOUT = 5  
+TIMEOUT_SECONDS = 5  
 
 # Denominazioni diverse code per diversi reparti
 QUEUE_NAMES = ["produzione", "magazzino", "logistica"]

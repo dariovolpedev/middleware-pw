@@ -1,6 +1,8 @@
 import asyncio
 from middleware import Middleware
-from logger import setup_logger
+from log_utils import setup_logger
+
+logger = setup_logger("producer")
 
 async def produce(middleware: Middleware):
     eventi = [
