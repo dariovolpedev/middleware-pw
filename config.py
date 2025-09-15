@@ -1,4 +1,11 @@
 # config.py
+import logging
+
+# livello di log
+LOG_LEVEL = logging.INFO 
+
+# cartella o percorso dove mettere i file di log
+LOG_DIR = "log"
 
 # Chiave per la cifratura Fernet (puoi rigenerarla se vuoi)
 FERNET_KEY = b'V-nfQ9bB_gCyazQCM3zRMMGnHT6cA4jWsp2j7zmKWS8='

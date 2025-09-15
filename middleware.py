@@ -25,16 +25,21 @@ class Middleware:
         queue = self._get_queue(queue_name)
 
         if queue.empty():
-            # nessun messaggio → condizione normale, nessun log
             return None
 
-        # qui so che c'è almeno un messaggio, quindi posso attendere con timeout
         try:
             encrypted = await asyncio.wait_for(queue.get(), timeout=TIMEOUT_SECONDS)
             message = decrypt_message(encrypted)
             logger.info(f"Messaggio distribuito da '{queue_name}': {message}")
             return message
+
         except asyncio.TimeoutError:
             logger.warning(f"Timeout su coda '{queue_name}' (nessun messaggio consumato entro {TIMEOUT_SECONDS}s)")
             return None
+
+        except Exception as exc:
+            # qui arrivano gli errori di decrittazione o altro nel processing
+            logger.error(f"Errore durante l'elaborazione del messaggio su '{queue_name}': {exc}")
+            return None
+
 
